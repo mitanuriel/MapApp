@@ -5,8 +5,8 @@ import MapView from 'react-native-maps';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello bitches</Text>
-      <StatusBar style="auto" />
+       <MapView style={styles.map} />
+       <StatusBar style="auto" />
     </View>
   );
 }
@@ -14,8 +14,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  map: {
+   width:'100%',
+   height:'100%',
   },
 });
