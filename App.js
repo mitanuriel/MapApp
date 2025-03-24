@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import * as Location from 'expo-location';
 
 export default function App() {
@@ -12,6 +12,31 @@ export default function App() {
     longitude:12,
     latitudeDelta:20,
     longitudeDelta:20
+  })
+
+  const mapView = useRef(null)// ref til mapView object
+  const locationSubscription = useRef(null) // when we close app, it shouldn't listen anymore
+
+  useEffect(() => {
+    async function startListenning(){
+      let { status} = await Location.requestForegroundPermissionsAsync()
+      if(status !== 'granted'){
+        alert("no access to the location")
+        return
+      }
+      locationSubscription.current = await Location.watchPositionAsync({
+        distanceInterval: 100,
+        accuracy: Location.Accuracy.High
+      }, (location) => {
+        const newRegion = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 20,
+          longitudeDelta: 20
+        }
+        setRegion(newRegion) // moves map to the new location
+      })
+    }
   })
 
   function addMarker(data){
