@@ -20,6 +20,7 @@ export default function App() {
   useEffect(() => {
     async function startListenning(){
       let { status} = await Location.requestForegroundPermissionsAsync()
+      console.log("Location permission status:", status); 
       if(status !== 'granted'){
         alert("no access to the location")
         return
@@ -31,8 +32,8 @@ export default function App() {
         const newRegion = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          latitudeDelta: 20,
-          longitudeDelta: 20
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }
         setRegion(newRegion) // moves map to the new location
         if(mapView.current){
