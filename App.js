@@ -29,6 +29,7 @@ export default function App() {
         distanceInterval: 100,
         accuracy: Location.Accuracy.High
       }, (location) => {
+        console.log("New location:", location.coords);
         const newRegion = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -65,6 +66,8 @@ export default function App() {
         ref={mapView}
         style={styles.map}
         region={region}
+        showsUserLocation={true}
+        showsMyLocationButton= { true}
         onRegionChangeComplete={setRegion}
         onLongPress={addMarker}
       >
