@@ -35,9 +35,14 @@ export default function App() {
           longitudeDelta: 20
         }
         setRegion(newRegion) // moves map to the new location
+        if(mapView.current){
+          mapView.current.animateToRegion(newRegion)
+        }
       })
     }
-  })
+    startListenning();
+
+ }, []);
 
   function addMarker(data){
     const {latitude, longitude} = data.nativeEvent.coordinate
@@ -56,6 +61,7 @@ export default function App() {
   return (
     <View style={styles.container}>
        <MapView
+        ref={mapView}
         style={styles.map}
         region={region}
         onRegionChangeComplete={setRegion}
